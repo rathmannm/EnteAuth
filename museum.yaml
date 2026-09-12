@@ -1,0 +1,41 @@
+# museum.yaml — Ente Auth (Auth-only) configuration
+# Mounted read-only into the museum container at /museum.yaml
+#
+# NO SECRETS IN THIS FILE. Museum loads config with Viper using env prefix
+# ENTE_ and maps "." and "-" to "_". So every secret below is supplied at
+# runtime from Dockhand's encrypted env-var UI and OVERRIDES this file:
+#
+#   db.password   <- ENTE_DB_PASSWORD
+#   key.encryption<- ENTE_KEY_ENCRYPTION
+#   key.hash      <- ENTE_KEY_HASH
+#   jwt.secret    <- ENTE_JWT_SECRET
+#
+# This file is safe to keep in Git. See README.md for the values to set.
+
+db:
+    host: postgres
+    port: 5432
+    name: ente_db
+    user: pguser
+    # password comes from ENTE_DB_PASSWORD (do not put it here)
+
+# Base endpoint of the Museum API as reached by clients.
+# Overridden at runtime by ENTE_API_ORIGIN. Change to your proxied URL, e.g.
+#   https://auth-api.rathmann.uk
+apps:
+    accounts: http://localhost:8080
+
+# --- SMTP (optional) ----------------------------------------------------
+# Without SMTP the signup code is not emailed — read it from the Museum logs.
+# smtp:
+#     host: smtp.your-provider.com
+#     port: 587
+#     username: you@rathmann.uk
+#     password: <smtp-app-password>   # or ENTE_SMTP_PASSWORD
+#     email: you@rathmann.uk
+
+# --- Secrets ------------------------------------------------------------
+# Intentionally omitted. Provided via env vars (see README.md).
+# key.encryption <- ENTE_KEY_ENCRYPTION
+# key.hash       <- ENTE_KEY_HASH
+# jwt.secret     <- ENTE_JWT_SECRET
