@@ -9,7 +9,7 @@
 
 services:
   museum:
-    image: ghcr.io/ente-io/server:latest
+    image: ghcr.io/ente/server:latest
     container_name: ente-museum
     restart: unless-stopped
     ports:
